@@ -1,0 +1,61 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Thumbnails
+Thumbs.db
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Build artifacts
+*.o
+*.swiftmodule
+*.swiftdoc
+*.d
+build/
+DerivedData/
+*.xcodeproj/
+*.xcworkspace/
+
+# Compiled binaries
+TerminalWindowCreator
+TerminalCreatorMenuBar
+TerminalManagerMenuBar
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Config files with sensitive data
+.env
+.env.local
+
+# Cache directories
+.cache/
+tmp/
+
+# Node (if any JS components added)
+node_modules/
+npm-debug.log*
