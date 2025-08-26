@@ -1,0 +1,78 @@
+name: Build Terminal Manager
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up environment
+      run: |
+        echo "Build environment ready"
+        swift --version
+        
+    - name: Build Terminal Manager MenuBar
+      run: |
+        swiftc -o TerminalManagerMenuBar \
+          -parse-as-library \
+          -framework Cocoa \
+          -framework SwiftUI \
+          TerminalManagerMenuBar.swift
+          
+    - name: Build Terminal Window Creator
+      run: |
+        swiftc -o TerminalWindowCreator \
+          -parse-as-library \
+          -framework SwiftUI \
+          -framework Cocoa \
+          TerminalWindowCreator.swift
+          
+    - name: Build Terminal Creator MenuBar
+      run: |
+        swiftc -o TerminalCreatorMenuBar \
+          -parse-as-library \
+          -framework Cocoa \
+          -framework SwiftUI \
+          TerminalCreatorMenuBar.swift
+          
+    - name: Test shell scripts
+      run: |
+        bash -n create_mapped_terminal.sh
+        bash -n rename-terminal.sh
+        bash -n install.sh
+        
+    - name: Create release artifacts
+      if: github.event_name == 'release'
+      run: |
+        mkdir -p release
+        cp TerminalManagerMenuBar release/
+        cp TerminalWindowCreator release/
+        cp TerminalCreatorMenuBar release/
+        cp create_mapped_terminal.sh release/
+        cp rename-terminal.sh release/
+        cp install.sh release/
+        cp README.md release/
+        cp LICENSE release/
+        
+        cd release
+        zip -r ../terminal-manager-system.zip .
+        
+    - name: Upload Release Asset
+      if: github.event_name == 'release'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./terminal-manager-system.zip
+        asset_name: terminal-manager-system-${{ github.event.release.tag_name }}.zip
+        asset_content_type: application/zip
