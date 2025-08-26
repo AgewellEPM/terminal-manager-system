@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Claude Terminal Mode - Full interactive terminal control
+# Type 'claude' to enter terminal management mode
+
+CYAN='\033[0;36m'
+MAGENTA='\033[0;35m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+echo -e "${MAGENTA}╔════════════════════════════════════════╗${NC}"
+echo -e "${MAGENTA}║${NC}     CLAUDE TERMINAL MODE ACTIVATED     ${MAGENTA}║${NC}"
+echo -e "${MAGENTA}╚════════════════════════════════════════╝${NC}"
+echo
+echo -e "${CYAN}You now have full terminal control!${NC}"
+echo
+echo -e "${GREEN}Quick Commands:${NC}"
+echo "  • Name this terminal:     terminal_bridge.sh name 'MyName'"
+echo "  • List all terminals:     terminal_bridge.sh list"
+echo "  • Send to terminal:       terminal_bridge.sh send 'Target' 'Message'"
+echo "  • Check messages:         terminal_bridge.sh check"
+echo "  • Enter chat mode:        terminal_bridge.sh chat"
+echo "  • Interactive mode:       terminal_bridge.sh claude"
+echo
+echo -e "${YELLOW}Starting interactive mode...${NC}"
+echo
+
+exec ~/terminal_bridge.sh claude

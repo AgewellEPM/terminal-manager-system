@@ -10,6 +10,9 @@ A comprehensive macOS terminal management system with dynamic naming, folder map
 - **🤖 Hoodrobot Integration**: Seamless integration with the Hoodrobot assistive system
 - **💾 JSON Persistence**: Maintains terminal mappings and names across sessions
 - **🔧 Multiple Interfaces**: GUI app, menu bar app, and command-line tools
+- **⚡ Claude Terminal Bridge**: Full interactive terminal control with inter-terminal communication
+- **💬 Chat Mode**: Real-time messaging between terminals
+- **🎯 Full Terminal Access**: Complete control while maintaining normal shell functionality
 
 ## 📦 Components
 
@@ -26,7 +29,14 @@ A comprehensive macOS terminal management system with dynamic naming, folder map
 - Recent folders tracking
 - Project name suggestions
 
-### 3. Command-Line Tools
+### 3. Claude Terminal Bridge (`terminal_bridge.sh`)
+- **Full interactive terminal control** with `claude` command
+- **Inter-terminal messaging** and real-time chat
+- **Dynamic terminal naming** and folder mapping
+- **Persistent communication** between terminal sessions
+- **Chat mode** for real-time collaboration
+
+### 4. Command-Line Tools
 - `create-terminal`: Create terminals from command line
 - `rename-terminal`: Dynamic terminal renaming with interactive menu
 - `create_mapped_terminal.sh`: Shell script interface
@@ -52,6 +62,21 @@ Click the terminal icon (⌨️) in the menu bar to access:
 - Terminal Windows (manage existing terminals)
 - Rename Terminals (batch or individual renaming)
 - Hoodrobot Integration (when available)
+
+### Claude Terminal Bridge (NEW!)
+
+```bash
+# Enter full terminal control mode
+claude
+
+# Direct commands
+terminal_bridge.sh name "MyTerminal"    # Name current terminal
+terminal_bridge.sh list                 # List all terminals
+terminal_bridge.sh send "Target" "Hi!"  # Send message
+terminal_bridge.sh check                # Check messages
+terminal_bridge.sh chat                 # Enter chat mode
+terminal_bridge.sh map                  # Map to folder
+```
 
 ### Command Line Interface
 
@@ -119,9 +144,71 @@ The rename system supports:
 - Shared JSON data structures
 - Menu bar integration when both systems active
 
+## ⚡ Claude Terminal Bridge - Full Control Mode
+
+The Claude Terminal Bridge gives you **complete terminal control** with inter-terminal communication:
+
+### Entering Claude Mode
+```bash
+# Type in any terminal to enter full control mode
+claude
+```
+
+### Interactive Features
+- **Press 1**: Name your terminal anything you want
+- **Press 2**: List all active terminals with their names and PIDs
+- **Press 3**: Send messages to specific terminals
+- **Press 4**: Check incoming messages from other terminals
+- **Press 5**: Broadcast messages to ALL terminals
+- **Press 6**: Quick map terminal to any folder
+- **Press 7**: Enter real-time chat mode between terminals
+
+### Chat Mode Commands
+- **Normal typing**: Broadcasts to all terminals
+- **@TerminalName message**: Send to specific terminal
+- **/name NewName**: Rename current terminal on the fly
+- **/list**: Show all active terminals
+- **/exit**: Leave chat mode
+
+### Example Workflow
+```bash
+# Terminal 1
+claude
+# Press 1, name it "Frontend"
+# Press 6, map to ~/Projects/frontend
+
+# Terminal 2  
+claude
+# Press 1, name it "Backend"
+# Press 6, map to ~/Projects/backend
+
+# Now they can communicate:
+# In Frontend: Press 3, send to "Backend": "Ready to deploy?"
+# In Backend: Press 4 to see message and respond
+```
+
 ## 📝 Examples
 
-### Quick Project Setup
+### Development Team Setup with Claude Bridge
+```bash
+# Terminal 1: Setup frontend
+claude
+# Press 1: Name "Frontend-Dev"
+# Press 6: Map to ~/Projects/webapp/frontend
+# Press 7: Enter chat mode
+
+# Terminal 2: Setup backend
+claude  
+# Press 1: Name "Backend-Dev"
+# Press 6: Map to ~/Projects/webapp/backend
+# Press 7: Enter chat mode
+
+# Now both terminals can chat in real-time while working!
+# Type: "Frontend ready for API testing"
+# Other terminal sees: "[Frontend-Dev]: Frontend ready for API testing"
+```
+
+### Quick Project Setup (Legacy)
 ```bash
 # Create development environment
 create-terminal "Frontend" ~/Projects/webapp/frontend
@@ -130,18 +217,6 @@ create-terminal "Database" ~/Projects/webapp/db
 
 # Rename for clarity
 rename-terminal -a "WebApp-{n}"
-```
-
-### Interactive Workflow
-```bash
-# Launch interactive creator
-create-terminal -i
-
-# Launch interactive renamer
-rename-terminal
-
-# View all terminals
-rename-terminal -l
 ```
 
 ## 🐛 Troubleshooting
